@@ -1,11 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Untitled Document</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-</head>
+<div class="well">
+<h2>Import:</h2>
+<?
+echo $this->form->create(null,array('class'=>'form form-horizontal','url'=>'/Import/Volume'));
+echo $this->form->select('volumes',$volumes);
+echo $this->form->submit('Submit',array('class'=>'btn btn-primary'));
+echo $this->form->end();
 
-<body>
-
-</body>
-</html>
+?>
+</div>

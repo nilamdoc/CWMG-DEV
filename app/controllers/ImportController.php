@@ -10,10 +10,10 @@ use \MongoId;
 
 class ImportController extends \lithium\action\Controller {
 	public function index() {
-		$volumes = Volumes::all(array('order'=> array('_id'=>'ASC')));
-
+		$volumes = Volumes::find('list',array("fields"=>"name","order"=>"number ASC"));
 		return compact('volumes');
 	}
+
 }
 
 ?>
