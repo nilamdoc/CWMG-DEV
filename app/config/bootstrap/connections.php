@@ -43,7 +43,10 @@ use lithium\data\Connections;
  Connections::add('default', array(
  	'type' => 'MongoDb',
  	'host' => 'localhost',
- 	'database' => 'CWMG'
+ 	'database' => 'CWMG',
+	'login' => 'mongo', 
+    'password' => 'awesomeness',
+
  ));
 
 /**

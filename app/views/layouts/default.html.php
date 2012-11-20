@@ -42,7 +42,7 @@
 	<div id="container" class="container">
 		<div id="header" class="header">
 			<h1>The Collected Works of Mahatma Gandhi</h1>
-			<?	echo $this->_render('element', 'menu');?>			
+			<?php	echo $this->_render('element', 'menu');?>			
 		</div>
 		<div id="content">
 			<?php echo $this->content(); ?>
@@ -50,6 +50,7 @@
 		<div id="footer" class="footer">
 			<p>&copy; The Collected Works of Mahatma Gandhi</p>
 		</div>
+
 	</div>
 </body>
 </html>

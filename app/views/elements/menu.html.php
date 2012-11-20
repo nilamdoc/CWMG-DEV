@@ -3,5 +3,5 @@
 </div>
 <div class="btn-group">
 <?=$this->html->link("Import", "Import",array('class'=>'btn '))?>
-<?=$this->html->link("Assign", "Assign Type",array('class'=>'btn '))?>
+<?=$this->html->link("Tag Fields", "Tags",array('class'=>'btn '))?>
 </div>

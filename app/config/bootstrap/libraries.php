@@ -66,7 +66,7 @@ define('LITHIUM_LIBRARY_PATH', dirname('F:/Apache/www/TBG/lithium'));
  * These are the default paths for all the 100 volumes available in CWMG
  */
 define('CWMG_VOLUMES_PATH',dirname(dirname(__DIR__)).'\webroot\eBookFiles');
-define('CWMG_FULL_VOLUME_PDF',dirname(dirname(__DIR__)).'\webroot\eBookFiles\PDF');
+define('CWMG_WEB_VOLUMES_PATH','/eBookFiles/');
 
 /**
  * Locate and load Lithium core library files.  Throws a fatal error if the core can't be found.
@@ -127,6 +127,6 @@ Libraries::add('app', array('default' => true));
 /**
  * Add some plugins:
  */
-// Libraries::add('li3_docs');
-
+//Libraries::add('li3_docs');
+Libraries::add('li3_show');
 ?>
