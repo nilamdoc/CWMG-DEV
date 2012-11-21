@@ -9,10 +9,11 @@ use lithium\action\DispatchException;
 use app\models\Volumes;
 use app\models\Types;
 use app\models\Pages;
+use app\models\Files;
 use \MongoId;  
 
 
-
+set_time_limit(0);
 class ImportController extends \lithium\action\Controller {
 
 
@@ -58,6 +59,7 @@ class ImportController extends \lithium\action\Controller {
 		$roman_vol = $this->roman($volume_number);
 		return compact('count','url','numeric_vol','roman_vol','volume_number');
 	}
+
 	public function pages() {
 		$id = $this->request->data['volume_number'];
 		$volume_number = $id;
@@ -134,9 +136,21 @@ class ImportController extends \lithium\action\Controller {
 				'ip'  => $_SERVER['REMOTE_ADDR']
 			);
 			$new_page = Pages::create($data)->save();
+			$newid = $pages->_id;
+	$file = Files::create();
+
+	$pdfurl = CWMG_VOLUMES_PATH."\\v".str_pad($id,3,"0",STR_PAD_LEFT)."-".$this->roman($id)."\\PDF\\";
+	$pdffilename = $filename.".pdf";
+//	$dataFS = Files::loadFromFile($pdfurl,$pdffilename);
+	$cmd = '"E:\\MongoDB\\bin\\Mongofiles.exe"  -d CWMG put '.$pdfurl.$pdffilename;
+//	print_r($cmd);
+	exec($cmd);
+//	exit;
 			$sortorder++;
 //				print_r($this->VolumePage->data);
+
 				}
+
 			}}
 			closedir($handle);
 			}
@@ -173,8 +187,6 @@ class ImportController extends \lithium\action\Controller {
 					Pages::find(array('fields'=>'_id'),array('conditions'=>array('filename'=>$filename)))->save($data);
 //					print_r("volume_number");
 				}
-
-
 				}
 			closedir($handle);
 			}
