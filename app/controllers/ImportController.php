@@ -4,8 +4,6 @@ namespace app\controllers;
 
 use lithium\action\DispatchException;
 
-//use lithium\data\source\MongoDb;
-//use lithium\core\StaticObject;
 use app\models\Volumes;
 use app\models\Types;
 use app\models\Pages;
@@ -93,6 +91,7 @@ class ImportController extends \lithium\action\Controller {
 			$data = array(
 				'volume_number'  => $id,
 				'type.id'  => '',			
+				'type.no'  => null,							
 				'type.name'  => null,								
 				'description'  => $this->clean_hex(str_replace('\•','',strip_tags($contents,'<p><i><ol><li><ul>'))),
 				'page_no'  =>  $page,
@@ -137,17 +136,21 @@ class ImportController extends \lithium\action\Controller {
 			);
 			$new_page = Pages::create($data)->save();
 			$newid = $pages->_id;
-	$file = Files::create();
+		
+			// Import the file in fs.files
+			$pdfurl = CWMG_VOLUMES_PATH."\\v".str_pad($id,3,"0",STR_PAD_LEFT)."-".$this->roman($id)."\\PDF\\";
+			$pdffilename = $filename.".pdf";
+			$cmd = '"E:\\MongoDB\\bin\\Mongofiles.exe"  -d CWMG put '.$pdfurl.$pdffilename;
+			exec($cmd);
+			
+			// rename the file in fs.files
+			$file = Files::create();
+			$data = array('filename'=>$filename.".pdf");
+			$dataFS = Files::find('all',array(
+				'conditions' => array('filename'=>$pdfurl.$pdffilename)
+			))->save($data);
 
-	$pdfurl = CWMG_VOLUMES_PATH."\\v".str_pad($id,3,"0",STR_PAD_LEFT)."-".$this->roman($id)."\\PDF\\";
-	$pdffilename = $filename.".pdf";
-//	$dataFS = Files::loadFromFile($pdfurl,$pdffilename);
-	$cmd = '"E:\\MongoDB\\bin\\Mongofiles.exe"  -d CWMG put '.$pdfurl.$pdffilename;
-//	print_r($cmd);
-	exec($cmd);
-//	exit;
 			$sortorder++;
-//				print_r($this->VolumePage->data);
 
 				}
 

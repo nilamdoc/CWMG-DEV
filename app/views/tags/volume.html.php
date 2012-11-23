@@ -1,6 +1,8 @@
 <?php
 	$this->scripts('<script src="/js/pdfobject.js"></script>'); 
 	$this->scripts('<script src="/ckeditor/ckeditor.js"></script>'); 	
+	$this->scripts('<script src="/js/Import.js"></script>'); 
+
 foreach ($pages as $p){
 	$filename = $p->filename;
 	$description = $p->description;
@@ -45,7 +47,9 @@ foreach ($pages as $p){
 
 </style>
 <hr>
-
+<? 	echo $this->form->select('topage',$topage,array('id'=>'ToPage','onblur'=>'gotoPage([this.options[this.selectedIndex].text]);'));
+	echo $this->form->create(null,array('class'=>'form form-horizontal','url'=>'/Tags/Save'));
+?>
 <div class="row" >
 	<div class="span6">
 		<div id="pdf">
@@ -56,5 +60,7 @@ foreach ($pages as $p){
 	</div>
 </div>
 <?php
-//print_r($pages);
+	echo $this->form->hidden('filename', array('value'=>$filename,'type'=>'hidden'));
+	echo $this->form->submit('Submit',array('class'=>'btn btn-primary'));
+	echo $this->form->end();
 ?>

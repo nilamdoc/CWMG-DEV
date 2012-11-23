@@ -20,3 +20,7 @@ function ChangeImage(id,path,pageID){
 	var ImageID = "THUMB"+id;
 	document.getElementById(ImageID).src=img;
 	}
+	
+function gotoPage(Volume){
+	window.location = "/Tags/Volume/"+Volume;
+	}
