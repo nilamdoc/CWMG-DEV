@@ -41,7 +41,7 @@
 <body class="container">
 	<div id="container" class="container">
 		<div id="header" class="header">
-			<h1>The Collected Works of Mahatma Gandhi</h1>
+<!--			<h1>The Collected Works of Mahatma Gandhi</h1> -->
 			<?php	echo $this->_render('element', 'menu');?>			
 		</div>
 		<div id="content">

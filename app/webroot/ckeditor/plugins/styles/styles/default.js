@@ -37,6 +37,8 @@ CKEDITOR.stylesSet.add('default',[
 {name:'Index: Entries',element:'IndexEntries',styles:{'background-color':'#000000','color':'White'}},								  								  
 								  
 {name:'Chronology: Entries',element:'ChronologyEntries',styles:{'background-color':'#000000','color':'White'}},								  								  
-{name:'Sources: Entries',element:'SourcesEntries',styles:{'background-color':'#000000','color':'White'}},								  								  
-								  ]);
+{name:'Sources: Entries',element:'SourcesEntries',styles:{'background-color':'#000000','color':'White'}},
+
+{name:'Content: Item',element:'ContentItemRow',styles:{'background-color':'#0033ff','color':'White'}},
+]);
 

@@ -244,6 +244,7 @@ class ImportController extends \lithium\action\Controller {
 		foreach($Types_id as $t){
 			$type_id = $t['_id'];
 			$type_name = $t['name'];
+			$type_no = $t['no'];			
 		}
 		foreach($From_id as $t){
 			$from_sort_order = $t['sort_order'];
@@ -254,6 +255,7 @@ class ImportController extends \lithium\action\Controller {
 		}
 		
 		$data = array(
+			'type.no'  => $type_no,		
 			'type.id'  => $type_id,
 			'type.name'  => $type_name,			
 			'ip'  => $_SERVER['REMOTE_ADDR']

@@ -6,7 +6,9 @@
 foreach ($pages as $p){
 	$filename = $p->filename;
 	$description = $p->description;
+	$id = $p->_id;
 }
+
 ?>
 
 <script type="text/javascript">
@@ -47,9 +49,16 @@ foreach ($pages as $p){
 
 </style>
 <hr>
-<? 	echo $this->form->select('topage',$topage,array('id'=>'ToPage','onblur'=>'gotoPage([this.options[this.selectedIndex].text]);'));
+<h2><?=$filename?></h2>
+<?php
+	echo $this->form->hidden('filename', array('value'=>$filename,'type'=>'hidden'));
+	echo $this->form->submit('Save',array('class'=>'btn btn-primary'));
+	echo $this->form->end();
+?>
+<? 	echo $this->form->select('topage',$topage,array('id'=>'ToPage','onblur'=>'gotoPage([this.options[this.selectedIndex].text]);','value'=>(string)$id));
 	echo $this->form->create(null,array('class'=>'form form-horizontal','url'=>'/Tags/Save'));
 ?>
+
 <div class="row" >
 	<div class="span6">
 		<div id="pdf">
@@ -61,6 +70,6 @@ foreach ($pages as $p){
 </div>
 <?php
 	echo $this->form->hidden('filename', array('value'=>$filename,'type'=>'hidden'));
-	echo $this->form->submit('Submit',array('class'=>'btn btn-primary'));
+	echo $this->form->submit('Save',array('class'=>'btn btn-primary'));
 	echo $this->form->end();
 ?>

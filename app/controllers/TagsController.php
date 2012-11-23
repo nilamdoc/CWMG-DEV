@@ -14,6 +14,7 @@ class TagsController extends \lithium\action\Controller {
 	}
 	public function volume(){
 if (!empty($this->request->params['args'][0])){
+$filename = $this->request->params['args'][0];
 	$volume_id = strval(floatval(substr(substr($this->request->params['args'][0],0,4),1,3)));
 	$Pagesconditions = array('volume_number'=>$volume_id,'filename'=>$this->request->params['args'][0]);
 }else{
@@ -48,7 +49,7 @@ if (!empty($this->request->params['args'][0])){
 								)
 								);
 		
-		return compact("pages","numeric_vol","roman_vol","topage");
+			return compact("pages","numeric_vol","roman_vol","topage");
 	}
 
 
@@ -135,6 +136,9 @@ if (!empty($this->request->params['args'][0])){
 
 	$chronologyentries_p = "/<chronologyentries style=\"background-color:#000000;color:white;\">(.*?)<\/chronologyentries>/s";
 	$sourcesentries_p = "/<sourcesentries style=\"background-color:#000000;color:white;\">(.*?)<\/sourcesentries>/s";	
+
+	$contentitemrow_p = "/<contentitemrow style=\"background-color:#0033ff;color:white;\">(.*?)<\/contentitemrow>/s";	
+		
 
 						
 //		echo $Content;
@@ -254,6 +258,11 @@ if (!empty($this->request->params['args'][0])){
 			$this->dosave($records, $filename, 'sources.entries');		
 		}
 //		exit;
+		$records = $this->getTextBetweenTags($Content, $contentitemrow_p);  
+		if(!empty($records)){
+			$this->dosave($records, $filename, 'content.item.row');		
+		}
+
 	}
 
 
@@ -263,30 +272,33 @@ if (!empty($this->request->params['args'][0])){
 	 }
 
 	function dosave($records, $filename, $tagname){
-
+	// Find the record for the $filename to modify
 	$findItem = Pages::find('all',
 				array('conditions'=>array(
 							'filename'=>$filename
 						)
 					));
 	$variable = array();
+	// check  for the tagname, if present, assign the value to the variable...
 	foreach($findItem as $f){
 		foreach($f->$tagname as $key=>$val){
 			array_push($variable,$key=$val);
 		}
 	} 
 
-
+	// add all values from $record (input by client) to $variable (data in Mongo)
 	foreach ($records as $r){
 		 array_push($variable,$r);
 	}
 //	print_r($variable);exit;
 	array_filter($variable);
+	// add it to the original tagname as an array
 $data = array($tagname=>array_unique($variable));
 
 
 //print_r($data);
 //exit;
+	// find the pagename with the file and save the $data....
 	$findPage = Pages::find(array('fields'=>'_id'),
 				array('conditions'=>array(
 							'filename'=>$filename
