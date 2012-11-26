@@ -8,10 +8,12 @@ use app\models\Pages;
 use \MongoId;  
 
 class TagsController extends \lithium\action\Controller {
+
 	public function index() {
 		$volumes = Volumes::find('list',array("fields"=>"name","order"=>"number ASC"));
 		return compact('volumes');
 	}
+
 	public function volume(){
 if (!empty($this->request->params['args'][0])){
 $filename = $this->request->params['args'][0];
@@ -51,7 +53,6 @@ $filename = $this->request->params['args'][0];
 		
 			return compact("pages","numeric_vol","roman_vol","topage");
 	}
-
 
 		function roman($N){
         $c='IVXLCDM';
@@ -280,12 +281,12 @@ $filename = $this->request->params['args'][0];
 					));
 	$variable = array();
 	// check  for the tagname, if present, assign the value to the variable...
-	foreach($findItem as $f){
+/* 	foreach($findItem as $f){
 		foreach($f->$tagname as $key=>$val){
 			array_push($variable,$key=$val);
 		}
 	} 
-
+ *//* 	$variable = array(); */
 	// add all values from $record (input by client) to $variable (data in Mongo)
 	foreach ($records as $r){
 		 array_push($variable,$r);
@@ -293,6 +294,15 @@ $filename = $this->request->params['args'][0];
 //	print_r($variable);exit;
 	array_filter($variable);
 	// add it to the original tagname as an array
+
+/* $data = array('$pullAll'=>array($tagname=>""));
+//print_r($data);exit;
+	$findPage = Pages::find(array('fields'=>'_id'),
+				array('conditions'=>array(
+							'filename'=>$filename
+						)
+					))->save($data);
+ */
 $data = array($tagname=>array_unique($variable));
 
 

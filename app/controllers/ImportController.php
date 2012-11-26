@@ -141,7 +141,7 @@ class ImportController extends \lithium\action\Controller {
 			$pdfurl = CWMG_VOLUMES_PATH."\\v".str_pad($id,3,"0",STR_PAD_LEFT)."-".$this->roman($id)."\\PDF\\";
 			$pdffilename = $filename.".pdf";
 			$cmd = '"E:\\MongoDB\\bin\\Mongofiles.exe"  -d CWMG put '.$pdfurl.$pdffilename;
-			exec($cmd);
+//			exec($cmd);
 			
 			// rename the file in fs.files
 			$file = Files::create();
@@ -151,9 +151,7 @@ class ImportController extends \lithium\action\Controller {
 			))->save($data);
 
 			$sortorder++;
-
 				}
-
 			}}
 			closedir($handle);
 			}

@@ -50,13 +50,19 @@ foreach ($pages as $p){
 </style>
 <hr>
 <h2><?=$filename?></h2>
+<? 	echo $this->form->select('topage',$topage,
+		array('id'=>'ToPage',
+		'onblur'=>'gotoPage([this.options[this.selectedIndex].text]);',
+//		'onchange'=>'showUpdated([this.options[this.selectedIndex].text])',
+		'value'=>(string)$id)
+		);
+	echo $this->form->create(null,array('class'=>'form form-horizontal','url'=>'/Tags/Save'));
+?>
+
 <?php
+
 	echo $this->form->hidden('filename', array('value'=>$filename,'type'=>'hidden'));
 	echo $this->form->submit('Save',array('class'=>'btn btn-primary'));
-	echo $this->form->end();
-?>
-<? 	echo $this->form->select('topage',$topage,array('id'=>'ToPage','onblur'=>'gotoPage([this.options[this.selectedIndex].text]);','value'=>(string)$id));
-	echo $this->form->create(null,array('class'=>'form form-horizontal','url'=>'/Tags/Save'));
 ?>
 
 <div class="row" >
@@ -73,3 +79,7 @@ foreach ($pages as $p){
 	echo $this->form->submit('Save',array('class'=>'btn btn-primary'));
 	echo $this->form->end();
 ?>
+    <input type="text" value="" name=""><br>
+    <select>
+     <option>Some options which is very very long... </option>
+    </select>

@@ -46,7 +46,6 @@ use lithium\data\Connections;
  	'database' => 'CWMG',
 	'login' => 'mongo', 
     'password' => 'awesomeness',
-
  ));
 
 /**
