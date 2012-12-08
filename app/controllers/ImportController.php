@@ -57,7 +57,49 @@ class ImportController extends \lithium\action\Controller {
 		$roman_vol = $this->roman($volume_number);
 		return compact('count','url','numeric_vol','roman_vol','volume_number');
 	}
+	public function files() {
+	
+		$id = $this->request->data['volume_number'];
+		$volume_number = $id;
+		$url = CWMG_VOLUMES_PATH."\\v".str_pad($id,3,"0",STR_PAD_LEFT)."-".$this->roman($id)."\\TXT";
+		$count = Pages::count(array('volume_number'=>$id));		
+		$numeric_vol = str_pad( $id,3,'0', STR_PAD_LEFT);
+		$roman_vol = $this->roman($id);
+		if ($handle = opendir($url)  ) {
+			while (false !== ($entry = readdir($handle))) {
+				if ($entry != "." && $entry != "..") {
+				 if(stristr($entry,"-B-")){
+				 	$is_roman = "1";
+				 }else{
+				 	$is_roman = "0";
+				 }
+					$page = str_replace(".txt","",$entry);
+					$page = str_replace("v".$numeric_vol."-".$roman_vol,"",$page);
+					$page = str_replace("-A-","",$page);				
+					$page = str_replace("-B-","",$page);				
+					$page = str_replace("-C-","",$page);				
+					$page = str_replace("-D-","",$page);				
+					$filename = str_replace(".txt","",$entry);
 
+		$pdfurl = CWMG_VOLUMES_PATH."\\v".str_pad($id,3,"0",STR_PAD_LEFT)."-".$this->roman($id)."\\PDF\\";
+//				if (substr($filename,12,3)>500 && substr($filename,12,3)<=600){
+					$pdffilename = $filename.".pdf";
+					$cmd = '"E:\\MongoDB\\bin\\Mongofiles.exe"  -d CWMG -r put '.$pdfurl.$pdffilename;
+					print_r($cmd);
+					exec($cmd);
+		
+					// rename the file in fs.files
+					$file = Files::create();
+					$data = array('filename'=>$filename.".pdf");
+					$dataFS = Files::find('all',array(
+						'conditions' => array('filename'=>$pdfurl.$pdffilename)
+					))->save($data);
+//				}
+			}
+			}
+		}
+	}
+	
 	public function pages() {
 		$id = $this->request->data['volume_number'];
 		$volume_number = $id;

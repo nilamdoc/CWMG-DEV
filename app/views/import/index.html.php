@@ -1,5 +1,5 @@
 <div class="well">
-<h2>Import:</h2>
+<h2>Import Pages:</h2>
 <?
 //print_r($IVolumes);
 $i = 0;
@@ -15,3 +15,4 @@ echo $this->form->end();
 
 ?>
 </div>
+
